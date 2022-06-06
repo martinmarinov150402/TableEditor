@@ -143,6 +143,18 @@ void String::append(char* other)
     size = size + strlen(other);
     strcat(data,other);   
 }
+void String::append(char other)
+{
+    if(capacity == size)
+    {
+        capacity = capacity * 2;
+        char *tmp = data;
+        data = new char[capacity];
+        strcpy(data,tmp);
+        delete[] tmp;
+    }
+    data[size++] = other;
+}
 void String::append(String& other)
 {
     append(other.data);

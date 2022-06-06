@@ -25,6 +25,7 @@ class String
         ~String();
         size_t Size();
         void append(char* other);
+        void append(char other);
         void append(String& other);
         bool operator==(String& other);
         bool operator==(const char*);

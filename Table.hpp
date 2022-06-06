@@ -1,32 +1,25 @@
 #ifndef TABLE_DEF
 #define TABLE_DEF
 
-#include "TableRecord.hpp"
+#include "TableRow.hpp"
 #include "string.h"
 
 const int DEFAULT_T_CAPACITY = 10;
 
-enum Types
-{
-    Double,
-    Int,
-    Str,
-};
 class Table
 {
     private:
-        TableRecord** tableContent;
+        TableRow* tableContent;
         int sizeRows;
-        int sizeCols;
-        int capacityRows, capacityCols;
+        int capacityRows;
+        void copy(Table const& other);
 
     public:
-        Types getType();
         Table();
+        Table(String fileName);
         Table(Table const& other);
         Table& operator=( Table const& other);
         ~Table();
-        bool readFromFile(String fileName);
 
 };
 
