@@ -13,6 +13,9 @@ int main()
     String asd;
     asd = "testTable.txt";
     Table a(asd);
+    String sas;
+    sas = "testSaveAs.txt";
+    a.saveAs(sas);
     
     
 }

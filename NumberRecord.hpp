@@ -1,3 +1,6 @@
+#ifndef NUMBER_RECORD
+#define NUMBER_RECORD
+
 #include "TableRecord.hpp"
 
 class NumberRecord : public TableRecord
@@ -10,3 +13,5 @@ class NumberRecord : public TableRecord
         }
         int getType() override;
 };
+
+#endif

@@ -1,6 +1,7 @@
 #ifndef TABLE_ROW
 #define TABLE_ROW
 
+#include <iostream>
 #include "TableRecord.hpp"
 #include "string.h"
 
@@ -18,6 +19,7 @@ class TableRow
         ~TableRow();
         TableRow& operator=(TableRow const& other);
         TableRow(TableRow const& other);
+        void WriteOnStream(std::ostream& out);
 };
 
 

@@ -9,12 +9,12 @@ class TableRecord
         String data;
 
     protected:
-        const char* getRawData() { return data.getData(); };
-        void setData(String _data) {data = _data; };
 
     public:
         virtual int getType() = 0;
-         
+        const char* getRawData() { return data.getData(); };
+        String getStringRawData() { return data; }; 
+        void setData(String _data) {data = _data; };
 
 };
 
