@@ -2,9 +2,14 @@
 #include "string.h"
 #include "Table.hpp"
 #include "checkType.hpp"
+#include "automataGen.cpp"
+#include "math.cpp"
 
 int main()
 {
+    String expr;
+    expr = "(30+20)*40+22";
+    std::cout<<expr<< " = " <<calculateExpression(expr)<<std::endl;
     int matrix[3][4] = {
         {1,2,3,4,},
         {5,6,7,8,},

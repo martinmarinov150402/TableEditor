@@ -1,9 +1,9 @@
 #include <iostream>
 
-void ag()
+static void ag()
 {
     freopen("automata.txt","w",stdout);
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i <= 9; i++)
     {
         std::cout<<"{ ";
         for(char j = 0; j < 127; j++)
@@ -20,6 +20,10 @@ void ag()
                     if(j >= '1' && j <= '9')
                     {
                         std::cout<<"3, ";
+                    }
+                    else if(j == '=')
+                    {
+                        std::cout<<"9, ";
                     }
                     else if(j == '+' || j == '-')
                     {
@@ -112,6 +116,10 @@ void ag()
                         std::cout<<"0, ";
                     }
                     break;
+                }
+                case 9:
+                {
+                    std::cout<<"9, ";
                 }
             }
             
