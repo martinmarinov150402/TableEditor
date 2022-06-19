@@ -7,17 +7,13 @@
 
 int main()
 {
-    String expr;
-    expr = "(30+20)*40+22";
-    std::cout<<expr<< " = " <<calculateExpression(expr)<<std::endl;
-    int matrix[3][4] = {
-        {1,2,3,4,},
-        {5,6,7,8,},
-        {9,10,11,12,},
-    };
+    /*String express;
+    express = "10+ 30";
+    std::cout<<calculateExpression(express);*/
     String asd;
     asd = "testTable.txt";
     Table a(asd);
+    a.printTable();
     String sas;
     sas = "testSaveAs.txt";
     a.saveAs(sas);

@@ -3,8 +3,9 @@
 
 static double fpow(double a, int b)
 {
+    //std::cout<<"A: "<<a<<" "<<"B: "<<b<<std::endl;
     if(b == 0) return 1;
-    if(b == 1) return 0;
+    if(b == 1) return a;
     if(b < 0) return fpow(1/a, -b);
     if(b % 2 == 0) return fpow(a*a, b/2);
     else return a * fpow(a*a, b/2);

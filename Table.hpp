@@ -14,13 +14,16 @@ class Table
         int sizeRows;
         int capacityRows;
         void copy(Table const& other);
+        double calculateFormula(int _row, int _col);
 
     public:
+
         Table();
         Table(String fileName);
         Table(Table const& other);
         Table& operator=( Table const& other);
         ~Table();
+        void printTable();
         void addRow(String& row);
         bool save();
         bool saveAs(String& _file);

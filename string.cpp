@@ -39,6 +39,13 @@ String& String::operator=(String& other)
     }
     return *this;
 }
+void String::termRem()
+{
+    if(data[size-1]=='\0')
+    {
+        size--;
+    }
+}
 String& String::operator=(char* other)
 {
     size = strlen(other);
@@ -154,6 +161,7 @@ void String::append(char other)
         delete[] tmp;
     }
     data[size++] = other;
+    if(other == '\0')size--;
 }
 void String::append(String& other)
 {

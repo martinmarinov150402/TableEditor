@@ -1,3 +1,4 @@
 10, "Bai Ivan", 30
 "Ivo", "Pena" , "Gosho"
+=R0C0 + R0C2
 #

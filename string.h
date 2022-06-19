@@ -33,6 +33,7 @@ class String
         const char* getData();
         void readLine(std::istream& in);
         void readTillEOF(std::istream& in);
+        void termRem();
     
     friend std::ostream& operator<<(std::ostream& out, String const& str);
     friend std::istream& operator>>(std::istream& in, String& str);
