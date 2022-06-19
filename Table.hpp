@@ -27,6 +27,7 @@ class Table
         void addRow(String& row);
         bool save();
         bool saveAs(String& _file);
+        bool setRecord(int _row, int _col, String& record);
 
 };
 

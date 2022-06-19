@@ -14,6 +14,7 @@ class TableRow
         void copy(TableRow const& other);
 
     public:
+        bool setRecord(int idx, String& record);
         int getSize() {return size;}; 
         TableRow();
         TableRow(String& row);

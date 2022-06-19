@@ -67,10 +67,15 @@ void TableRow::WriteOnStream(std::ostream& out)
     for(int i = 0; i < size; i++)
     {
         String data;
-        data = records[i]->getRawData();
-        for(int j = 0; j < data.Size(); j++)
+        if(records[i] != nullptr)
         {
-            out<<data[j];
+            data = records[i]->getRawData();
+            data.append('\0');
+            for(int j = 0; j < data.Size(); j++)
+            {
+                out<<data[j];
+            }
+            out<<"\0";
         }
         if(i != size - 1) out<<", ";
         else out << "\n";
@@ -90,6 +95,58 @@ TableRecord*& TableRow::operator[](int idx)
 {
     return records[idx];
 }
+bool TableRow::setRecord(int idx, String& record)
+{
+    if(idx >= capacity)
+    {
+        capacity = 2*idx+1;
+        records = (TableRecord**)realloc(records, sizeof(TableRecord*) * capacity);
+        for(int i = size; i < capacity; i++)
+        {
+            records[i] = nullptr;
+        }
+        size = idx+1;
+    }
+    if(idx >= size) size = idx+1;
+    String tmp1;
+    bool result = true;
+    tmp1 = record.getData();
+    trim(tmp1);
+    tmp1.append('\0');
+    int type = checkType(tmp1);
+    delete records[idx];
+    switch(type)
+    {
+        case TYPE_NUMBER:
+        {
+            records[idx] = new NumberRecord(tmp1);
+            break;
+        }
+        case TYPE_RATIONAL:
+        {
+            records[idx] = new RationalRecord(tmp1);
+            break;
+        }
+        case TYPE_STRING:
+        {
+            records[idx] = new StringRecord(tmp1);
+            break;
+        }
+        case TYPE_FORMULA:
+        {
+            records[idx] = new FormulaRecord(tmp1);
+            break;
+        }
+        case TYPE_UNDEF:
+        {
+            result = false;
+            std::cout<<"UndefRecord: "<<tmp1<<std::endl;
+            break;
+        }
+    
+    }
+    return result;
+}
 TableRow::TableRow(String& row)
 {
     String tmp1;
@@ -99,6 +156,7 @@ TableRow::TableRow(String& row)
     records = new TableRecord*[itemsC];
     int idx = 0;
     row.append(',');
+    row.append('\0');
     for(int i = 0; i < row.Size(); i++)
     {
         if(row[i] != ',')
@@ -107,39 +165,10 @@ TableRow::TableRow(String& row)
         }
         else
         {
-            trim(tmp1);
-            int type = checkType(tmp1);
             tmp1.append('\0');
-            
-            switch(type)
-            {
-                case TYPE_NUMBER:
-                {
-                    records[idx++] = new NumberRecord(tmp1);
-                    break;
-                }
-                case TYPE_RATIONAL:
-                {
-                    records[idx++] = new RationalRecord(tmp1);
-                    break;
-                }
-                case TYPE_STRING:
-                {
-                    records[idx++] = new StringRecord(tmp1);
-                    break;
-                }
-                case TYPE_FORMULA:
-                {
-                    records[idx++] = new FormulaRecord(tmp1);
-                    break;
-                }
-                case TYPE_UNDEF:
-                {
-                    std::cout<<"UndefRecord: "<<tmp1<<std::endl;
-                    break;
-                }
-            
-            }
+            records[idx] = nullptr;
+            bool result = setRecord(idx, tmp1);
+            if(result) idx++;
             tmp1 = "";
         }
         size = idx;

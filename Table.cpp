@@ -43,6 +43,7 @@ double Table::calculateFormula(int _row, int _col)
             else
             {
                 expression.append(data[i]);
+                expression.append('\0');
             }
         }
         else
@@ -63,6 +64,7 @@ double Table::calculateFormula(int _row, int _col)
                     sstr<<calculateFormula(atoi(row.getData()),atoi(col.getData()));
                     result = sstr.str().c_str();
                     expression.append(result);
+                    expression.append('\0');
                     row="";
                     col="";
                 }
@@ -152,14 +154,37 @@ Table::Table(String fileName)
             if(line == "#")break;
             int items = countItems(line);
             addRow(line);
-            
             /*for(int i = 0; i < items; i++)tableContent[idx][i] = nullptr;*/
         }
+        std::cout<<"Successfully opened file "<<fileName<<std::endl;
+        tableInput.close();
     }
-    tableInput.close();
+    else
+    {
+        std::cout<<"Error with opening of file "<<fileName;
+    }
+}
+bool Table::setRecord(int _row, int _col, String& record)
+{
+    if(_row > sizeRows)
+    {
+        for(int i = sizeRows; i <= _row; i++)
+        {
+            String es;
+            es = "";
+            addRow(es);
+        }
+
+    }
+    return tableContent[_row]->setRecord(_col, record);
 }
 Table::~Table()
 {
+
+    for(int i = 0; i < sizeRows; i++)
+    {
+        delete tableContent[i];
+    }
     delete[] tableContent;
 }
 void Table::copy(Table const& other)
@@ -186,7 +211,7 @@ bool Table::save()
         {
             tableContent[i]->WriteOnStream(fout);
         }
-        fout << "#";
+        fout << "#\n";
         fout.close();
         return true;
     }
@@ -203,14 +228,22 @@ void Table::printTable()
     {
         for(int j = 0; j < tableContent[i]->getSize(); j++)
         {
-            if(tableContent[i]->operator[](j)->getType() == TYPE_FORMULA)
+            if(tableContent[i]->operator[](j) != nullptr)
             {
-                std::cout<<calculateFormula(i,j)<<" | ";
+                if(tableContent[i]->operator[](j)->getType() == TYPE_FORMULA)
+                {
+                    std::cout<<calculateFormula(i,j)<<" | ";
+                }
+                else
+                {
+                    std::cout<<tableContent[i]->operator[](j)->getRawData() <<" | ";
+                } 
             }
             else
             {
-                std::cout<<tableContent[i]->operator[](j)->getRawData() <<" | ";
+                std::cout<<" |";
             }
+            
         }
         std::cout<<std::endl;
     }

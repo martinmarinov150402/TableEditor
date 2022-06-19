@@ -1,4 +1,4 @@
 10, "Bai Ivan", 30
-"Ivo", "Pena" , "Gosho"
-=R0C0 + R0C2
+"Ivo", "Pena", "Gosho"
+=R0C0 + R0C2, =R0C0 * 10 + R0C2 + R2C0
 #
