@@ -10,6 +10,8 @@ class Table
 {
     private:
         String file;
+        int maxRLength;
+        int maxCLength;
         TableRow** tableContent;
         int sizeRows;
         int capacityRows;

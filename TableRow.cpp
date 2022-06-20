@@ -3,6 +3,8 @@
 #include "TableRecord.hpp"
 #include "checkType.hpp"
 #include "NumberRecord.hpp"
+#include <cmath>
+#include <algorithm>
 #include "RationalRecord.hpp"
 #include "StringRecord.hpp"
 #include "FormulaRecord.hpp"
@@ -120,21 +122,25 @@ bool TableRow::setRecord(int idx, String& record)
         case TYPE_NUMBER:
         {
             records[idx] = new NumberRecord(tmp1);
+            maxRLength = std::max(maxRLength, int(tmp1.Size()));
             break;
         }
         case TYPE_RATIONAL:
         {
             records[idx] = new RationalRecord(tmp1);
+            maxRLength = std::max(maxRLength, int(tmp1.Size()));
             break;
         }
         case TYPE_STRING:
         {
             records[idx] = new StringRecord(tmp1);
+            maxRLength = std::max(maxRLength, int(tmp1.Size()));
             break;
         }
         case TYPE_FORMULA:
         {
             records[idx] = new FormulaRecord(tmp1);
+            maxRLength = std::max(maxRLength, 10);
             break;
         }
         case TYPE_UNDEF:
@@ -150,7 +156,7 @@ bool TableRow::setRecord(int idx, String& record)
 TableRow::TableRow(String& row)
 {
     String tmp1;
-
+    maxRLength = 0;
     tmp1 = "";
     int itemsC = countItems(row);
     records = new TableRecord*[itemsC];

@@ -12,6 +12,7 @@ class TableRow
         int capacity;
         TableRecord** records;
         void copy(TableRow const& other);
+        int maxRLength;
 
     public:
         bool setRecord(int idx, String& record);
@@ -23,6 +24,7 @@ class TableRow
         TableRecord*& operator[](int idx);
         TableRow(TableRow const& other);
         void WriteOnStream(std::ostream& out);
+        int getMaxRLength() { return maxRLength;};
 };
 
 

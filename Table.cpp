@@ -21,7 +21,6 @@ double Table::calculateFormula(int _row, int _col)
         }
     }
     String data;
-
     data = tableContent[_row]->operator[](_col)->getRawData();
     data.append('\0');
     String expression;
@@ -226,24 +225,43 @@ void Table::printTable()
 {
     for(int i = 0; i < sizeRows; i++)
     {
+        maxRLength = std::max(maxRLength, tableContent[i]->getMaxRLength());
+        maxCLength = std::max(maxCLength, tableContent[i]->getSize());
+    }
+    for(int j = 0; j < maxCLength*(maxRLength+3); j++)
+    {
+        std::cout<<"-";
+    }
+    std::cout<<std::endl;
+    for(int i = 0; i < sizeRows; i++)
+    {
         for(int j = 0; j < tableContent[i]->getSize(); j++)
         {
             if(tableContent[i]->operator[](j) != nullptr)
             {
                 if(tableContent[i]->operator[](j)->getType() == TYPE_FORMULA)
                 {
-                    std::cout<<calculateFormula(i,j)<<" | ";
+                    std::cout<<std::setw(maxRLength)<<calculateFormula(i,j)<<" | ";
                 }
                 else
                 {
-                    std::cout<<tableContent[i]->operator[](j)->getRawData() <<" | ";
+                    std::cout<<std::setw(maxRLength)<<tableContent[i]->operator[](j)->getRawData() <<" | ";
                 } 
             }
             else
             {
-                std::cout<<" |";
+                std::cout<<std::setw(maxRLength)<<" | ";
             }
             
+        }
+        for(int j = tableContent[i]->getSize(); j < maxCLength; j++)
+        {
+            std::cout<<std::setw(maxRLength)<<""<<" | ";
+        }
+        std::cout<<std::endl;
+        for(int j = 0; j < maxCLength*(maxRLength+3); j++)
+        {
+            std::cout<<"-";
         }
         std::cout<<std::endl;
     }
